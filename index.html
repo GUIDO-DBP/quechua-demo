@@ -3,18 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Demo Quechua — Lexemes Wikidata</title>
+  <title>Qhapaq — Demo Lexemes Quechua</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <h1>Demo: Lexemes en Quechua (Wikidata)</h1>
-    <p>Consulta SPARQL a Wikidata — muestra los primeros lexemas en quechua.</p>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">Qhapaq — Demo Lexemes (Quechua)</h1>
+      <p class="subtitle">Consulta SPARQL en Wikidata · Ejemplo funcional para el prototipo</p>
+    </div>
+  </header>
 
-    <button id="run">Cargar lexemas (Quechua)</button>
-    <div id="status"></div>
-    <ul id="results"></ul>
+  <main class="container">
+    <section class="card">
+      <h2 class="card-title">Explorar lexemas en quechua</h2>
+      <p class="muted">Haz clic para cargar una muestra de lexemas desde Wikidata (ejemplo).</p>
+
+      <div class="controls">
+        <button id="run" class="btn-primary">Cargar lexemas (Quechua)</button>
+        <span id="status" class="status"></span>
+      </div>
+
+      <div class="results-wrap">
+        <ul id="results" class="results-list" aria-live="polite"></ul>
+      </div>
+
+      <footer class="card-footer">
+        <small>Demo conectada a Wikidata — Netlify Functions como proxy.</small>
+      </footer>
+    </section>
+
+    <section class="notes">
+      <h3>Notas rápidas</h3>
+      <ul>
+        <li>Esta demo muestra cómo consultar lexemas de Wikidata vía SPARQL.</li>
+        <li>Para producción conviene añadir paginación, cache y validación.</li>
+      </ul>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>Hecho por el equipo · Proyecto de preservación lingüística</small>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

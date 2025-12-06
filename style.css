@@ -1,6 +1,43 @@
-body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial; padding: 24px; }
-h1 { margin-bottom: 6px; }
-button { padding: 8px 12px; border-radius: 6px; cursor: pointer; }
-#status { margin-top: 12px; color: #333; }
-#results li { margin: 6px 0; }
-small { color: #666; font-size: 0.9em; }
+:root{
+  --bg:#f7f8fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0f172a;
+  --primary:#0b74de;
+  --shadow: 0 6px 18px rgba(13,24,40,0.06);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--accent);-webkit-font-smoothing:antialiased}
+.container{max-width:920px;margin:0 auto;padding:20px}
+
+.site-header{background:linear-gradient(90deg, #0b74de22, transparent);padding:22px 0;margin-bottom:10px}
+.brand{font-size:1.5rem;margin:0 0 6px}
+.subtitle{margin:0;color:var(--muted);font-size:0.95rem}
+
+.card{background:var(--card);padding:20px;border-radius:12px;box-shadow:var(--shadow);margin-bottom:18px}
+.card-title{margin:0 0 6px;font-size:1.125rem}
+.muted{color:var(--muted);margin-bottom:12px}
+
+.controls{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.btn-primary{background:var(--primary);color:#fff;border:none;padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer;box-shadow:0 6px 12px rgba(11,116,222,0.12)}
+.btn-primary:active{transform:translateY(1px)}
+.status{color:var(--muted);font-size:0.95rem}
+
+.results-wrap{margin-top:8px}
+.results-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.results-list li{padding:10px;border-radius:8px;background:#f6fbff;border:1px solid #eef6ff;font-size:0.98rem;display:flex;justify-content:space-between;align-items:center}
+.results-list small{color:var(--muted);font-size:0.85rem}
+
+.card-footer{margin-top:14px;color:var(--muted);font-size:0.8rem}
+
+.notes{margin-top:8px;color:var(--muted);font-size:0.95rem;background:transparent}
+.site-footer{padding:14px 0;text-align:center;color:var(--muted);font-size:0.85rem;margin-top:20px}
+
+/* responsive */
+@media (max-width:600px){
+  .container{padding:12px}
+  .brand{font-size:1.25rem}
+  .btn-primary{padding:10px 12px}
+}
