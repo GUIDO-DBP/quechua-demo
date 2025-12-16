@@ -1,60 +1,42 @@
-// netlify/functions/lexemes.js
-// Netlify Function que actúa como proxy al Wikidata Query Service (WDQS)
-// No requiere dependencias externas si Netlify usa Node >= 18 (fetch global).
 exports.handler = async (event) => {
   try {
-    // Obtener query: preferimos POST JSON { query: "..." }, si no, fallback a q param
-    let query = "";
-    if (event.httpMethod === "POST" && event.body) {
-      try { query = JSON.parse(event.body).query || ""; } catch (e) { query = ""; }
-    }
-    if (!query) query = (event.queryStringParameters && event.queryStringParameters.q) || "";
+    const body = JSON.parse(event.body || "{}");
+    const query = body.query;
 
     if (!query) {
       return {
         statusCode: 400,
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ error: "Falta el parámetro 'query' (SPARQL)." })
+        body: JSON.stringify({ error: "Falta query SPARQL" })
       };
     }
 
-    const wdqsUrl = "https://query.wikidata.org/sparql?query=" + encodeURIComponent(query) + "&format=json";
+    const url =
+      "https://query.wikidata.org/sparql?format=json&query=" +
+      encodeURIComponent(query);
 
-    // Llamada al WDQS desde el servidor (aquí podemos establecer User-Agent)
-    const resp = await fetch(wdqsUrl, {
+    const response = await fetch(url, {
       headers: {
         "Accept": "application/sparql-results+json",
-        // Cambia el email a uno tuyo para seguimiento si quieres
-        "User-Agent": "QuechuaDemo/1.0 (mailto:tu_correo@example.com)"
-      },
-      // timeout no nativo aquí; Netlify limita ejecución a su timeout
+        // MUY IMPORTANTE
+        "User-Agent": "QuechuaDemo/1.0 (https://quechuademo.netlify.app)"
+      }
     });
 
-    if (!resp.ok) {
-      const text = await resp.text().catch(()=>"");
-      return {
-        statusCode: resp.status,
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-        body: JSON.stringify({ error: `WDQS responded ${resp.status}`, detail: text })
-      };
-    }
-
-    const json = await resp.json();
+    const data = await response.json();
 
     return {
       statusCode: 200,
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"  // permite que tu frontend llame desde cualquier dominio
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(json)
+      body: JSON.stringify(data)
     };
 
-  } catch (err) {
+  } catch (error) {
     return {
       statusCode: 500,
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-      body: JSON.stringify({ error: err.message })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
