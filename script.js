@@ -11,12 +11,12 @@ PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT ?lexeme ?lemma WHERE {
-  ?lexeme rdf:type wikibase:Lexeme .
-  ?lexeme dct:language wd:Q5218 .
+  ?lexeme dct:language wd:Q5218 .   # Q5218 = Quechua
   ?lexeme wikibase:lemma ?lemma .
 }
 LIMIT 15
 `;
+
 
 async function fetchLexemesDebug() {
   resultsList.innerHTML = "";
