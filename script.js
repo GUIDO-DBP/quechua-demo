@@ -1,4 +1,3 @@
-// script.js — versión FINAL (sin debug, solo resultados)
 const funcUrl = "/.netlify/functions/lexemes";
 const resultsList = document.getElementById("results");
 const statusDiv = document.getElementById("status");
@@ -44,8 +43,8 @@ async function fetchLexemes() {
     bindings.forEach(b => {
       const li = document.createElement("li");
       li.innerHTML = `
-        <strong>${escapeHtml(b.lemma.value)}</strong>
-        <small>${escapeHtml(b.lexeme.value)}</small>
+        <strong>${b.lemma.value}</strong>
+        <small>${b.lexeme.value}</small>
       `;
       resultsList.appendChild(li);
     });
@@ -54,15 +53,6 @@ async function fetchLexemes() {
     console.error(err);
     statusDiv.textContent = "Error consultando la función.";
   }
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"]/g, s => ({
-    '&':'&amp;',
-    '<':'&lt;',
-    '>':'&gt;',
-    '"':'&quot;'
-  }[s]));
 }
 
 runBtn.addEventListener("click", fetchLexemes);
